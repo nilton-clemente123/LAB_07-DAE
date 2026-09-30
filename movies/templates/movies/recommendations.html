@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Recomendaciones para {{ movie.title }}</title>
+</head>
+<body>
+    <h1>Si te gusta «{{ movie.title }}»</h1>
+    <p>Películas de los mismos géneros ({{ movie.genres.all|join:", " }}), ordenadas por mejor valoración:</p>
+    <ol>
+        {% for rec in recommended %}
+            <li>
+                {{ rec.title }} ({{ rec.year }})
+                — nota media: {% if rec.avg_rating %}{{ rec.avg_rating|floatformat:1 }}{% else %}sin valoraciones{% endif %}
+            </li>
+        {% empty %}
+            <li>No hay otras películas con esos géneros.</li>
+        {% endfor %}
+    </ol>
+    <p><a href="{% url 'movies:movie_list' %}">Volver a la cartelera</a></p>
+</body>
+</html>

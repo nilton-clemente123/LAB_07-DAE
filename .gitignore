@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Base de datos local (se regenera con migrate + comandos de datos)
+db.sqlite3
+
+# Archivos multimedia subidos
+media/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Entorno / secretos
+.env
+
+# Sistema
+.DS_Store
+Thumbs.db
