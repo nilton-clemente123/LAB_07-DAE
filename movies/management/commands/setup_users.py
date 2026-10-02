@@ -10,13 +10,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # 1) Superusuario
+        admin_password = "AdminLab07#2026"
         admin_user, created = User.objects.get_or_create(
             username="admin", defaults={"email": "admin@lab07.com"},
         )
         admin_user.is_staff = True
         admin_user.is_superuser = True
         if created:
-            admin_user.set_password("AdminLab07#2026")
+            admin_user.set_password(admin_password)
+        elif not admin_user.check_password(admin_password):
+            # El usuario ya existía con otra contraseña: se restablece la
+            # documentada en el README para que el acceso siempre funcione.
+            admin_user.set_password(admin_password)
+            self.stdout.write(self.style.WARNING(
+                'Se restableció la contraseña del superusuario «admin».'
+            ))
         admin_user.save()
 
         # 2) Grupo «editores»: añadir/cambiar películas, sin permiso de borrado
@@ -28,13 +36,19 @@ class Command(BaseCommand):
             )
 
         # 3) Usuario dentro del grupo
+        editor_password = "EditorLab07#2026"
         editor, created = User.objects.get_or_create(
             username="editor", defaults={"email": "editor@lab07.com"},
         )
         editor.is_staff = True
         editor.is_superuser = False
         if created:
-            editor.set_password("EditorLab07#2026")
+            editor.set_password(editor_password)
+        elif not editor.check_password(editor_password):
+            editor.set_password(editor_password)
+            self.stdout.write(self.style.WARNING(
+                'Se restableció la contraseña del usuario «editor».'
+            ))
         editor.groups.add(group)
         editor.save()
 
