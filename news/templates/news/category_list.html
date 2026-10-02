@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} — Portal de noticias{% endblock %}
+
+{% block content %}
+    <h2>Noticias de «{{ category.name }}»</h2>
+    {% for article in articles %}
+        {% include 'news/_article_card.html' %}
+    {% empty %}
+        <p class="empty">No hay noticias en esta categoría todavía.</p>
+    {% endfor %}
+    <p><a href="{% url 'news:home' %}">← Volver a la portada</a></p>
+{% endblock %}
+
+{% block sidebar %}
+    <h3>Todas las categorías</h3>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'news:category_list' category.slug %}">{{ category.name }}</a>
+            </li>
+        {% empty %}
+            <li class="empty">No hay categorías todavía.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

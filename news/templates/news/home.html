@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Portada — Portal de noticias{% endblock %}
+
+{% block content %}
+    <h2>Portada</h2>
+    {% for article in articles %}
+        {% include 'news/_article_card.html' %}
+    {% empty %}
+        <p class="empty">No hay noticias publicadas todavía.</p>
+    {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+    <h3>Categorías</h3>
+    <ul>
+        {% for category in categories %}
+            <li><a href="{% url 'news:category_list' category.slug %}">{{ category.name }}</a></li>
+        {% empty %}
+            <li class="empty">No hay categorías todavía.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

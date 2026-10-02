@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Aplicaciones del proyecto
     'movies',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,6 +118,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# Archivos estáticos compartidos a nivel de proyecto (no pertenecen a una app)
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Archivos multimedia subidos por el usuario (carteles de películas)
 MEDIA_URL = '/media/'

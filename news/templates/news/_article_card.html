@@ -1,0 +1,19 @@
+<article class="card">
+    {% if article.image %}
+        <img class="card-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+    {% endif %}
+    <h2 class="card-title">
+        <a href="{% url 'news:article_detail' article.slug %}">{{ article.title }}</a>
+    </h2>
+    <p class="card-meta">
+        {{ article.published_at|date:"d/m/Y H:i" }} · por {{ article.author }}
+    </p>
+    <p class="card-summary">{{ article.body|truncatewords:30 }}</p>
+    <p class="card-categories">
+        {% for category in article.categories.all %}
+            <a class="badge" href="{% url 'news:category_list' category.slug %}">{{ category.name }}</a>
+        {% empty %}
+            <span class="badge badge-muted">Sin categorías</span>
+        {% endfor %}
+    </p>
+</article>

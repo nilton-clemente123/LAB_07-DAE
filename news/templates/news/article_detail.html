@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} — Portal de noticias{% endblock %}
+
+{% block content %}
+    <article class="detail">
+        <h2>{{ article.title }}</h2>
+        <p class="card-meta">
+            Publicada el {{ article.published_at|date:"d/m/Y H:i" }} ·
+            Autor: <strong>{{ article.author }}</strong>
+        </p>
+
+        {% if article.image %}
+            <img class="detail-image" src="{{ article.image.url }}" alt="{{ article.title }}">
+        {% endif %}
+
+        <div class="detail-body">{{ article.body }}</div>
+
+        <p class="card-categories">
+            Categorías:
+            {% for category in article.categories.all %}
+                <a class="badge" href="{% url 'news:category_list' category.slug %}">{{ category.name }}</a>
+            {% empty %}
+                <span class="badge badge-muted">Sin categorías</span>
+            {% endfor %}
+        </p>
+
+        <p><a href="{% url 'news:home' %}">← Volver a la portada</a></p>
+    </article>
+{% endblock %}
+
+{% block sidebar %}
+    <h3>Otras noticias</h3>
+    <ul>
+        {% for other in latest %}
+            <li><a href="{% url 'news:article_detail' other.slug %}">{{ other.title }}</a></li>
+        {% empty %}
+            <li class="empty">No hay más noticias.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

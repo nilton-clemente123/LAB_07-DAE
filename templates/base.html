@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Portal de noticias{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <p class="site-title"><a href="{% url 'news:home' %}">📰 Portal de noticias</a></p>
+        <nav class="site-nav">
+            <a href="{% url 'news:home' %}">Portada</a>
+            {% for category in categories %}
+                <a href="{% url 'news:category_list' category.slug %}">{{ category.name }}</a>
+            {% endfor %}
+        </nav>
+    </header>
+
+    <div class="layout">
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+        <aside class="sidebar">
+            {% block sidebar %}{% endblock %}
+        </aside>
+    </div>
+
+    <footer class="site-footer">
+        <p>DAE · Portal de noticias con Django · {% now "d/m/Y" %}</p>
+    </footer>
+</body>
+</html>
